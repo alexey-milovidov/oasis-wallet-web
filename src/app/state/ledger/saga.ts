@@ -17,14 +17,17 @@ function* setStep(step: LedgerStep) {
   yield* put(ledgerActions.setStep(step))
 }
 
+let singleTransport: Transport
+
 function* getUSBTransport() {
+  if (singleTransport) return singleTransport
   const isSupported = yield* call([TransportWebUSB, TransportWebUSB.isSupported])
   if (!isSupported) {
     throw new WalletError(WalletErrors.USBTransportNotSupported, 'TransportWebUSB unsupported')
   }
   try {
-    const transport = yield* call([TransportWebUSB, TransportWebUSB.create])
-    return transport
+    singleTransport = yield* call([TransportWebUSB, TransportWebUSB.create])
+    return singleTransport
   } catch (e: any) {
     if (e.message.match(/No device selected/)) {
       throw new WalletError(WalletErrors.LedgerNoDeviceSelected, e.message)
@@ -70,9 +73,6 @@ function* enumerateAccounts() {
 
     yield* put(ledgerActions.operationFailed(payload))
   } finally {
-    if (transport) {
-      yield* call([transport, transport.close])
-    }
   }
 }
 
@@ -86,7 +86,6 @@ export function* sign<T>(signer: LedgerSigner, tw: oasis.consensus.TransactionWr
   } catch (e) {
     throw e
   } finally {
-    yield* call([transport, transport.close])
   }
 }
 
