@@ -71,9 +71,15 @@ export function parseAccount(account: AccountsRow): Account {
   return {
     address: account.address,
     available: account.liquid_balance,
-    delegations: null,
-    debonding: null,
-    total: null,
+    delegations: account.delegations_balance ?? null,
+    debonding: account.debonding_delegations_balance ?? null,
+    // Note: can't use `account.total_balance` because it includes escrow balance in validator accounts
+    total:
+      account.liquid_balance == null ||
+      account.delegations_balance == null ||
+      account.debonding_delegations_balance == null
+        ? null
+        : account.liquid_balance + account.delegations_balance + account.debonding_delegations_balance,
   }
 }
 

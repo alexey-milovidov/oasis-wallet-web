@@ -70,9 +70,9 @@ export function parseAccount(account: AccountsRow): Account {
   return {
     address: account.address,
     available: parseStringValueToInt(account.available),
-    delegations: null,
-    debonding: null,
-    total: null,
+    delegations: parseStringValueToInt(account.escrow),
+    debonding: parseStringValueToInt(account.debonding),
+    total: parseStringValueToInt(account.total),
   }
 }
 

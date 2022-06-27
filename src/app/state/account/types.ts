@@ -3,8 +3,12 @@ import { ErrorPayload } from 'types/errors'
 
 export interface BalanceDetails {
   available: number | null
+
+  /** This is delayed by 20 seconds on oasisscan and 5 seconds on oasismonitor. */
   debonding: number | null
+  /** This is delayed by 20 seconds on oasisscan and 5 seconds on oasismonitor. */
   delegations: number | null
+  /** This is delayed by 20 seconds on oasisscan and 5 seconds on oasismonitor. */
   total: number | null
 }
 

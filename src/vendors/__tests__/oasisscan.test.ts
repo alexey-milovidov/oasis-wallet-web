@@ -17,7 +17,7 @@ describe('oasisscan', () => {
         available: '756.455428396',
         escrow: '1460535.533308247',
         debonding: '0',
-        total: '1461291.988735606',
+        total: '1461291.988736643',
         nonce: 2,
         allowances: [],
       }),
