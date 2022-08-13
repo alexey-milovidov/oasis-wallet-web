@@ -78,7 +78,7 @@ export const Account = memo((props: AccountProps) => {
           <Box align="start" flex="grow" direction="row">
             {walletTypes[props.type]} {props.details && <Text size="small">({props.details})</Text>}
           </Box>
-          <Box>
+          <Box direction="row">
             <AmountFormatter amount={props.balance} />
           </Box>
         </Box>
